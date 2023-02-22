@@ -1,0 +1,24 @@
+import requests
+import pandas as pd
+import json
+
+df = pd.read_csv("majina.csv")
+
+link = "http://127.0.0.1:8080/student/add"
+
+
+def GenerateJson() -> "generates jsonObject":
+	m = 0
+	n = 1
+	for _ in range(len(df)):
+		jsonObj = df.iloc[m].to_json(orient="columns")
+		m = n
+		n+=1
+	return jsonObj
+
+a = json.loads(GenerateJson())
+def PostRequest() -> "posts json":
+	return requests.post(link,json=a)
+
+print(type(a),a)
+PostRequest()
